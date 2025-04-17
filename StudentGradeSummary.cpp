@@ -30,7 +30,7 @@ int main()
             cout << "\n[Student " << students.size() + 1 << "]\n";
 
             string name;
-            cin.ignore(); // <<— this needs to come before getline
+            cin.ignore();
             cout << "Enter name: ";
             getline(cin, name);
             students.push_back(name);
@@ -67,7 +67,7 @@ int main()
             choices = 'N';
         }
 
-    } while (choices == 'Y' || choices == 'y'); // <<— this line was inside the wrong place earlier
+    } while (choices == 'Y' || choices == 'y');
 
     cout << "\n--- STUDENT GRADE SUMMARY ---\n";
 
