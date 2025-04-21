@@ -81,7 +81,7 @@ int main()
     for (int i = 0; i < students.size(); i++)
     {
         int math = math_grades[i];
-        int science = science_grades[   ];
+        int science = science_grades[i];
         int english = english_grades[i];
         int average = (math + science + english) / 3;
 
