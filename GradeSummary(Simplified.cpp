@@ -29,17 +29,17 @@ int main() {
         names.push_back(name);
 
         // Input Math grade
-        cout << "Math grade (0-99): ";
+        cout << "Math grade: ";
         cin >> m;
         math.push_back(m);
 
         // Input English grade
-        cout << "English grade (0-99): ";
+        cout << "English grade: ";
         cin >> e;
         english.push_back(e);
 
         // Input Science grade
-        cout << "Science grade (0-99): ";
+        cout << "Science grade: ";
         cin >> s;
         science.push_back(s);
         }
