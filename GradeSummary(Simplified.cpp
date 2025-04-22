@@ -29,17 +29,17 @@ int main() {
         names.push_back(name);
 
         // Input Math grade
-        cout << "Math grade: ";
+        cout << "Math grade (0-99): ";
         cin >> m;
         math.push_back(m);
 
         // Input English grade
-        cout << "English grade: ";
+        cout << "English grade (0-99): ";
         cin >> e;
         english.push_back(e);
 
         // Input Science grade
-        cout << "Science grade: ";
+        cout << "Science grade (0-99): ";
         cin >> s;
         science.push_back(s);
         }
@@ -67,7 +67,7 @@ int main() {
         else if(avg <= 89) remarks = "Passed";
         else remarks = "Excellent";
 
-        cout << names[i] << " - Average: " << avg << " - " << remarks << endl;
+        cout << names[i] << " - Math: " << math[i] << " - English: "<< english[i] << " - Science: " << science[i] << " - Average: " << avg << " - " << remarks << endl;
     }
     return 0;
 }
