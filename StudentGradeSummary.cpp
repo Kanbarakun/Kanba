@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <limits>
 using namespace std;
 
 int main()
@@ -20,8 +21,10 @@ int main()
             cout << "How many students? (1 to " << 12 - students.size() << " only): ";
             cin >> num_of_students;
 
-            if (num_of_students < 1 || num_of_students > 12 - students.size()) {
+            if (cin.fail() || num_of_students < 1 || num_of_students > 12 - students.size()) {
                 cout << "Invalid! You can only put up to 1 to 12 students total.\n";
+                cin.clear()
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
         } while (num_of_students < 1 || num_of_students > 12 - students.size());
 
@@ -40,21 +43,27 @@ int main()
             do {
                 cout << "Enter Math grade: ";
                 cin >> grade;
-                if (grade < 0 || grade > 99) cout << "Invalid Number! Try again.\n";
+                if (cin.fail() || grade < 0 || grade > 99) cout << "Invalid Number! Try again.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             } while (grade < 0 || grade > 99);
             math_grades.push_back(grade);
 
             do {
                 cout << "Enter Science grade: ";
                 cin >> grade;
-                if (grade < 0 || grade > 99) cout << "Invalid Number! Try again.\n";
+                if (cin.fail() || grade < 0 || grade > 99) cout << "Invalid Number! Try again.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             } while (grade < 0 || grade > 99);
             science_grades.push_back(grade);
 
             do {
                 cout << "Enter English grade: ";
                 cin >> grade;
-                if (grade < 0 || grade > 99) cout << "Invalid! Try again.\n";
+                if (cin.fail() || grade < 0 || grade > 99) cout << "Invalid! Try again.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             } while (grade < 0 || grade > 99);
             english_grades.push_back(grade);
         }
@@ -62,6 +71,8 @@ int main()
         if (students.size() < 12) {
             cout << "\nDo you want to input more students? (Y/N): ";
             cin >> choices;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), 'n');
         } else {
             cout << "\nYou have reached the maximum of 12 students.\n";
             choices = 'N';
