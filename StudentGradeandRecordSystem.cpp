@@ -2,7 +2,6 @@
 #include <vector>       // for using dynamic arrays (vector)
 #include <string>       // for using string data type
 #include <limits>       // for handling input errors
-#include <iomanip>      // for formatting output (optional here)
 using namespace std;
 
 // Base class: Person
