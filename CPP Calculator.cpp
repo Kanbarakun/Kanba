@@ -32,10 +32,11 @@ int main()
         num2 = validint("Enter Second Number: ");
 
     cout << "\nChoose Operation: ";
-    cout << "\n1. Addition\n";
-    cout << "\n2. Subtraction\n";
-    cout << "\n3. Multiplication.\n";
-    cout << "\n4. Divsion.\n";
+    cout << "1. Addition\n";
+    cout << "2. Subtraction\n";
+    cout << "3. Multiplication.\n";
+    cout << "4. Divsion.\n";
+    cout << "5. Exit." << endl;
     cout << "Choice: ";
     choice = validint("Enter Choice: ");
 
@@ -54,13 +55,15 @@ int main()
        cout << "Result: " << divide(num1, num2) << endl;
        break;
     default:
-    cout << "Invalid Choice.\n";
+    cout << "Invalid or Exit..\n";
     }
 
     }while(choice != 5);
 
 
   return 0;
+
+
 }
 
 int add(int a, int b)
