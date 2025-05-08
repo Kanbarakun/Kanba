@@ -3,8 +3,21 @@
 #include <vector>
 #include <iomanip>
 #include <fstream>
+#include <limits>
 using namespace std;
 
+int intValid(string prompt){
+    int value;
+    while(true){
+        cout << prompt;
+        cin >> value;
+        if(!cin.fail()) break;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid! Please enter a number.\n";
+    }
+    return value;
+}
 // Structure to store student data
 struct Student {
     string name;
@@ -42,13 +55,9 @@ void inputStudents(vector<Student>& students) {
         cout << "Enter name: ";
         getline(cin, s.name);
 
-        cout << "Math grade: ";
-        cin >> s.math;
-        cout << "Science grade: ";
-        cin >> s.science;
-        cout << "English grade: ";
-        cin >> s.english;
-
+       s.math = intValid("Enter Math Grade: ");
+       s.english = intValid("Enter English Grade: ");
+       s.science = intValid("Enter Science Grade: ");
         students.push_back(s);
     }
 }
@@ -134,4 +143,3 @@ void exportToFile(const vector<Student>& students) {
     file.close();
     cout << "\nData exported to 'grade_report.txt'\n";
 }
-
