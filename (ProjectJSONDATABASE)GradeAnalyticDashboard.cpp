@@ -9,6 +9,7 @@ using json = nlohmann::json;
 // Structure to store student data
 struct Student {
     string name;
+    string section;
     int math;
     int science;
     int english;
@@ -17,6 +18,8 @@ struct Student {
 
 // Function prototypes
 void addStudent(vector<Student>& students);
+void searchStudent(const vector<Student>& students);
+void searchSection(const vector<Student>& students);
 void viewStudents(const vector<Student>& students);
 void updateStudent(vector<Student>& students);
 void deleteStudent(vector<Student>& students);
@@ -49,7 +52,6 @@ int ValidGrade(const string& subject){
         if(grade < 0 || grade > 100) cout << "Invalid! Grade must be between 0 - 100\n";
     } while (grade < 0 || grade > 100);
     return grade;
-    
 }
 int main() {
     vector<Student> students;
@@ -62,8 +64,10 @@ int main() {
         cout << "2. View Students\n";
         cout << "3. Update Student\n";
         cout << "4. Delete Student\n";
-        cout << "5. View Analytics\n";
-        cout << "6. Exit\n";
+        cout << "5. Search section\n";
+        cout << "6. Search Student\n";
+        cout << "7. View Analytics\n";
+        cout << "8. Exit\n";
         choice = ValidInput("Enter Choice: ");
 
         switch (choice) {
@@ -71,22 +75,77 @@ int main() {
             case 2: viewStudents(students); break;
             case 3: updateStudent(students); break;
             case 4: deleteStudent(students); break;
-            case 5: displayAnalytics(students); break;
-            case 6: saveStudents(students); cout << "Exiting...\n"; break;
+            case 5: searchSection(students); break;
+            case 6: searchStudent(students); break; 
+            case 7: displayAnalytics(students); break;
+            case 8: saveStudents(students); cout << "Exiting...\n"; break;
             default: cout << "Invalid choice. Try again.\n";
         }
 
-    } while (choice != 6);
+    } while (choice != 8);  
 
     return 0;
 }
 
+// Function to search for a student by name
+void searchStudent(const vector<Student>& students) {
+    string searchName;
+    cout << "Enter student name to search: ";
+    cin.ignore();
+    getline(cin, searchName);
+
+    bool found = false;
+    cout << "\n--- Search Results ---\n";
+    for (const auto& s : students) {
+        if (s.name.find(searchName) != string::npos) {
+            cout << "Name: " << s.name
+                 << " | Section: " << s.section
+                 << " | Math: " << s.math
+                 << " | Science: " << s.science
+                 << " | English: " << s.english
+                 << " | Remarks: " << s.remarks << endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No students found with the name containing \"" << searchName << "\".\n";
+    }
+}
+// function to searh for student sectinosn
+void searchSection(const vector<Student>& students){
+    string searchSection;
+    cout << "Enter section to search: ";
+    cin.ignore();
+    getline(cin, searchSection);
+
+    bool found = false;
+    cout << "\n---- Search Section Results ---\n";
+    for (const auto&s : students){
+        if(s.section == searchSection){
+            cout << "Name: " << s.name
+                 << " | Section: " << s.section
+                 << " | Math: " << s.math
+                 << " | Science: " << s.science
+                 << " | English: " << s.english
+                 << " | Remarks: " << s.remarks << endl;
+         found = true;
+        }
+    }
+
+    if(!found){
+        cout << "No students found in section \"" << searchSection << "\".\n";
+    }
+}
 // Function to add a student
 void addStudent(vector<Student>& students) {
     Student s;
     cout << "Enter student name: ";
     cin.ignore();
     getline(cin, s.name);
+
+    cout << "Enter section: ";
+    getline(cin, s.section);
 
     s.math = ValidGrade(" Math");
     s.science = ValidGrade(" Science");
@@ -103,6 +162,7 @@ void viewStudents(const vector<Student>& students) {
     cout << "\n--- Student Records ---\n";
     for (const auto& s : students) {
         cout << "Name: " << s.name
+             << " | Section: " << s.section
              << " | Math: " << s.math
              << " | Science: " << s.science
              << " | English: " << s.english
@@ -155,6 +215,7 @@ void saveStudents(const vector<Student>& students) {
     for (const auto& s : students) {
         j.push_back({
             {"name", s.name},
+            {"section", s.section},
             {"math", s.math},
             {"science", s.science},
             {"english", s.english},
@@ -177,6 +238,7 @@ void loadStudents(vector<Student>& students) {
             for (const auto& item : j) {
                 Student s;
                 s.name = item["name"];
+                s.section = item["section"];
                 s.math = item["math"];
                 s.science = item["science"];
                 s.english = item["english"];
