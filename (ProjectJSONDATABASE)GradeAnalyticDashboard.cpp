@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <iomanip>
 #include <vector>
 #include "Include/json.hpp"
@@ -31,6 +32,14 @@ double calculateMean(const vector<int>& grades);
 int findMax(const vector<int>& grades);
 int findMin(const vector<int>& grades);
 
+// function case-sensitive
+string tolowercase(const string& str){
+    string lowstr = str;
+    transform(lowstr.begin(), lowstr.end(), lowstr.begin(), ::tolower);
+    return lowstr;
+}
+
+// function to not make any errors
 int ValidInput(const string& prompt){
     int value;
     while(true){
@@ -44,6 +53,7 @@ int ValidInput(const string& prompt){
     return value;
 }
 
+// function for grades
 int ValidGrade(const string& subject){
     int grade;
     do
@@ -97,7 +107,7 @@ void searchStudent(const vector<Student>& students) {
     bool found = false;
     cout << "\n--- Search Results ---\n";
     for (const auto& s : students) {
-        if (s.name.find(searchName) != string::npos) {
+        if (tolowercase(s.name).find(tolowercase(searchName)) != string::npos) {
             cout << "Name: " << s.name
                  << " | Section: " << s.section
                  << " | Math: " << s.math
@@ -122,7 +132,7 @@ void searchSection(const vector<Student>& students){
     bool found = false;
     cout << "\n---- Search Section Results ---\n";
     for (const auto&s : students){
-        if(s.section == searchSection){
+        if(tolowercase(s.section) == tolowercase(searchSection)){
             cout << "Name: " << s.name
                  << " | Section: " << s.section
                  << " | Math: " << s.math
@@ -178,7 +188,7 @@ void updateStudent(vector<Student>& students) {
     getline(cin, name);
 
     for (auto& s : students) {
-        if (s.name == name) {
+        if (tolowercase(s.name) == tolowercase(name)) {
               s.math = ValidGrade(" Math");
               s.science = ValidGrade(" Science");
               s.english = ValidGrade(" English");
@@ -199,7 +209,7 @@ void deleteStudent(vector<Student>& students) {
     getline(cin, name);
 
     for (auto it = students.begin(); it != students.end(); ++it) {
-        if (it->name == name) {
+        if (tolowercase(it->name) == tolowercase(name)) {
             students.erase(it);
             saveStudents(students);
             cout << "Student deleted successfully!\n";
