@@ -54,6 +54,15 @@
         return lowstr;
     }
 
+    bool isValidName(const string& name) {
+        for (char c : name) {
+           if (!isalpha(c) && (!isspace(c))) {
+            return false;
+           }
+        }
+        return !name.empty();
+    }
+
     // function to validate Input
     int ValidInput(const string& prompt){
         int value;
@@ -115,28 +124,60 @@
     // Function to search for a student by name
     void searchStudent(const vector<Student>& students) {
         string searchName;
-        cout << "Enter student name to search: ";
         cin.ignore();
+        while(true){
+        cout << "Enter student name to search: ";
         getline(cin, searchName);
+
+        if(isValidName(searchName)){
+            break;
+        } else {
+            cout << "Please enter a proper name.\n";
+        }
+    }
+        // convert and tokenize search input
+        stringstream ss(tolowercase(searchName));
+        vector<string> searchTokens;
+        string token;
+        while(ss >> token){
+            searchTokens.push_back(token);
+        }
 
         bool found = false;
         cout << "\n--- Search Results ---\n";
         for (const auto& s : students) {
-            if (tolowercase(s.name).find(tolowercase(searchName)) != string::npos) {
-                cout << "Name: " << s.name
+
+            // convert and tokenize students
+            stringstream ssStudent(tolowercase(s.name));
+            vector <string> studentTokens;
+            while(ssStudent >> token){
+                studentTokens.push_back(token);
+            }
+
+            bool allmatch = true;
+            for (const auto& st : searchTokens){
+                if(find(studentTokens.begin(), studentTokens.end(), st) == studentTokens.end()){
+                    allmatch = false;
+                    break;
+                }
+            }
+
+            if (allmatch) {
+              cout << "Name: " << s.name
                     << " | Section: " << s.section
                     << " | Math: " << s.math
                     << " | Science: " << s.science
                     << " | English: " << s.english
                     << " | Remarks: " << s.remarks << endl;
                 found = true;
+                }
             }
-        }
 
         if (!found) {
             cout << "No students found with the name containing \"" << searchName << "\".\n";
         }
     }
+
     // function to searh for student sectinosn
     void searchSection(const vector<Student>& students){
         string searchSection;
@@ -162,13 +203,24 @@
             cout << "No students found in section \"" << searchSection << "\".\n";
         }
     }
+
+    
     // Function to add a student
     void addStudent(vector<Student>& students) {
         Student s;
         s.id = global_id++;
-        cout << "Enter student name: ";
         cin.ignore();
+        while(true){
+        cout << "Enter student name: ";
         getline(cin, s.name);
+
+        if(isValidName(s.name)){
+            break;
+        }else {
+            cout << "Please enter a proper name.\n";
+        }
+
+    }
 
         cout << "Enter section: ";
         getline(cin, s.section);
@@ -202,13 +254,21 @@
     // Function to update student (names, section, grades)
     void updateStudent(vector<Student>& students) {
         string name;
-        cout << "Enter student name to update: ";
         cin.ignore();
+        while(true){
+        cout << "Enter student name to update: ";
         getline(cin, name);
+
+        if(isValidName(name)){
+            break;
+        } else {
+            cout << "Please enter a proper name.\n";
+        }
+    }
 
         for (auto& s : students) {
             if (tolowercase(s.name) == tolowercase(name)) {
-                cout << "\n--- Current Record ---\n";
+                cout << "\n--- Current Record ---\n";   
                 cout << "Name: " << s.name
                     << " | Section: " << s.section
                     << " | Math: " << s.math
@@ -308,7 +368,7 @@
             }
             return; // loaded successfully
         } catch (...) {
-            cout << "⚠️ Error loading 'students.json'. Trying to restore from backup...\n";
+            cout << "Error loading 'students.json'. Trying to restore from backup...\n";
         }
     }
 
@@ -339,7 +399,7 @@
     }
 
     students.clear();
-    saveStudents(students); // Save empty list to initialize
+    saveStudents(students);
 }
 
 
